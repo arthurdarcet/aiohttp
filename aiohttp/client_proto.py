@@ -71,6 +71,8 @@ class ResponseHandler(DataQueue, asyncio.streams.FlowControlMixin):
         try:
             uncompleted = self._parser.feed_eof()
         except Exception as e:
+            import logging
+            logging.error('Feed eof failed: {}'.format(e), exc_info=True)
             uncompleted = None
             if self._payload is not None:
                 self._payload.set_exception(
