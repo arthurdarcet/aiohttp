@@ -82,6 +82,8 @@ class ResponseHandler(DataQueue, asyncio.streams.FlowControlMixin):
             if exc is None:
                 exc = ServerDisconnectedError(uncompleted)
             DataQueue.set_exception(self, exc)
+            import logging
+            logging.root.error('Server disconnected: {!r}'.format(exc))
 
         self.transport = self.writer = None
         self._should_close = True
